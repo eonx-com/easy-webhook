@@ -2,20 +2,27 @@
 
 declare(strict_types=1);
 
-namespace EonX\EasyWebhook\Middleware;
+namespace EonX\EasyWebhook;
 
-use EonX\EasyWebhook\Interfaces\StackInterface;
 use EonX\EasyWebhook\Interfaces\WebhookInterface;
+use EonX\EasyWebhook\Interfaces\WebhookResultHandlerInterface;
 use EonX\EasyWebhook\Interfaces\WebhookResultInterface;
+use EonX\EasyWebhook\Interfaces\WebhookResultStoreInterface;
 
-final class StatusAndAttemptMiddleware extends AbstractMiddleware
+final class WebhookResultHandler implements WebhookResultHandlerInterface
 {
-    public function process(WebhookInterface $webhook, StackInterface $stack): WebhookResultInterface
-    {
-        $webhookResult = $stack
-            ->next()
-            ->process($webhook, $stack);
+    /**
+     * @var \EonX\EasyWebhook\Interfaces\WebhookResultStoreInterface
+     */
+    private $store;
 
+    public function __construct(WebhookResultStoreInterface $store)
+    {
+        $this->store = $store;
+    }
+
+    public function handle(WebhookResultInterface $webhookResult): WebhookResultInterface
+    {
         $webhook = $webhookResult->getWebhook();
         $webhook->currentAttempt($webhook->getCurrentAttempt() + 1);
 
@@ -31,6 +38,6 @@ final class StatusAndAttemptMiddleware extends AbstractMiddleware
                 );
         }
 
-        return $webhookResult;
+        return $this->store->store($webhookResult);
     }
 }

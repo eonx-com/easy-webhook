@@ -10,16 +10,11 @@ use EonX\EasyWebhook\Interfaces\WebhookResultInterface;
 final class ArrayWebhookResultStoreStub implements IdAwareWebhookResultStoreInterface
 {
     /**
-     * @var \EonX\EasyWebhook\Interfaces\WebhookResultInterface[]
-     */
-    private $results = [];
-
-    /**
-     * @var null|string
+     * @var string
      */
     private $webhookId;
 
-    public function __construct(?string $webhookId = null)
+    public function __construct(string $webhookId)
     {
         $this->webhookId = $webhookId;
     }
@@ -31,26 +26,11 @@ final class ArrayWebhookResultStoreStub implements IdAwareWebhookResultStoreInte
 
     public function generateWebhookId(): string
     {
-        return $this->webhookId ?? 'webhook-id';
-    }
-
-    /**
-     * @return \EonX\EasyWebhook\Interfaces\WebhookResultInterface[]
-     */
-    public function getResults(): array
-    {
-        return $this->results;
+        return $this->webhookId;
     }
 
     public function store(WebhookResultInterface $result): WebhookResultInterface
     {
-        if ($this->webhookId !== null) {
-            $result->getWebhook()
-                ->id($this->webhookId);
-        }
-
-        $this->results[] = $result;
-
         return $result;
     }
 }

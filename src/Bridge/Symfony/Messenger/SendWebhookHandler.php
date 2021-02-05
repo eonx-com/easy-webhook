@@ -37,6 +37,7 @@ final class SendWebhookHandler implements MessageHandlerInterface
         // Once here, webhooks are already configured and should be sent synchronously
         $result
             ->getWebhook()
+            ->configured(true)
             ->sendNow(true);
 
         $message->setResult($this->client->sendWebhook($result->getWebhook()));

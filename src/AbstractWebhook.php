@@ -11,34 +11,26 @@ abstract class AbstractWebhook implements WebhookInterface
     /**
      * @var string[]
      */
-    protected static $integers = [self::OPTION_CURRENT_ATTEMPT, self::OPTION_MAX_ATTEMPT];
+    protected static $integers = ['current_attempt', 'max_attempt'];
 
     /**
      * @var string[]
      */
     protected static $setters = [
-        self::OPTION_BODY => 'body',
-        self::OPTION_BODY_AS_STRING => 'bodyAsString',
-        self::OPTION_CURRENT_ATTEMPT => 'currentAttempt',
-        self::OPTION_EVENT => 'event',
-        self::OPTION_ID => 'id',
-        self::OPTION_HTTP_OPTIONS => 'httpClientOptions',
-        self::OPTION_MAX_ATTEMPT => 'maxAttempt',
-        self::OPTION_METHOD => 'method',
-        self::OPTION_SECRET => 'secret',
-        self::OPTION_STATUS => 'status',
-        self::OPTION_URL => 'url',
+        'body' => 'body',
+        'current_attempt' => 'currentAttempt',
+        'event' => 'event',
+        'http_options' => 'httpClientOptions',
+        'max_attempt' => 'maxAttempt',
+        'method' => 'method',
+        'status' => 'status',
+        'url' => 'url',
     ];
 
     /**
      * @var null|mixed[]
      */
     private $body;
-
-    /**
-     * @var null|string
-     */
-    private $bodyAsString;
 
     /**
      * @var null|bool
@@ -93,7 +85,7 @@ abstract class AbstractWebhook implements WebhookInterface
     /**
      * @var null|string
      */
-    private $status = self::STATUS_PENDING;
+    private $status;
 
     /**
      * @var null|string
@@ -147,13 +139,6 @@ abstract class AbstractWebhook implements WebhookInterface
         return $this;
     }
 
-    public function bodyAsString(string $body): WebhookInterface
-    {
-        $this->bodyAsString = $body;
-
-        return $this;
-    }
-
     public function configured(?bool $configured = null): WebhookInterface
     {
         $this->configured = $configured ?? true;
@@ -191,11 +176,6 @@ abstract class AbstractWebhook implements WebhookInterface
     public function getBody(): ?array
     {
         return $this->body;
-    }
-
-    public function getBodyAsString(): ?string
-    {
-        return $this->bodyAsString;
     }
 
     public function getCurrentAttempt(): int
