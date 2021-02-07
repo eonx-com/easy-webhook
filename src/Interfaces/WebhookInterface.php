@@ -14,6 +14,109 @@ interface WebhookInterface
     /**
      * @var string
      */
+    public const HEADER_EVENT = 'X-Webhook-Event';
+
+    /**
+     * @var string
+     */
+    public const HEADER_ID = 'X-Webhook-Id';
+
+    /**
+     * @var string
+     */
+    public const HEADER_SIGNATURE = 'X-Webhook-Signature';
+
+    /**
+     * @var string
+     */
+    public const OPTIONS = [
+        self::OPTION_BODY,
+        self::OPTION_BODY_AS_STRING,
+        self::OPTION_CURRENT_ATTEMPT,
+        self::OPTION_EVENT,
+        self::OPTION_ID,
+        self::OPTION_HTTP_OPTIONS,
+        self::OPTION_MAX_ATTEMPT,
+        self::OPTION_METHOD,
+        self::OPTION_SECRET,
+        self::OPTION_SEND_AFTER,
+        self::OPTION_STATUS,
+        self::OPTION_URL,
+    ];
+
+    /**
+     * @var string
+     */
+    public const OPTION_BODY = 'body';
+
+    /**
+     * @var string
+     */
+    public const OPTION_BODY_AS_STRING = 'body_as_string';
+
+    /**
+     * @var string
+     */
+    public const OPTION_CURRENT_ATTEMPT = 'current_attempt';
+
+    /**
+     * @var string
+     */
+    public const OPTION_EVENT = 'event';
+
+    /**
+     * @var string
+     */
+    public const OPTION_HTTP_OPTIONS = 'http_options';
+
+    /**
+     * @var string
+     */
+    public const OPTION_ID = 'id';
+
+    /**
+     * @var string
+     */
+    public const OPTION_MAX_ATTEMPT = 'max_attempt';
+
+    /**
+     * @var string
+     */
+    public const OPTION_METHOD = 'method';
+
+    /**
+     * @var string
+     */
+    public const OPTION_SECRET = 'secret';
+
+    /**
+     * @var string
+     */
+    public const OPTION_SEND_AFTER = 'send_after';
+
+    /**
+     * @var string
+     */
+    public const OPTION_STATUS = 'status';
+
+    /**
+     * @var string
+     */
+    public const OPTION_URL = 'url';
+
+    /**
+     * @var string[]
+     */
+    public const STATUSES = [
+        self::STATUS_FAILED,
+        self::STATUS_FAILED_PENDING_RETRY,
+        self::STATUS_PENDING,
+        self::STATUS_SUCCESS,
+    ];
+
+    /**
+     * @var string
+     */
     public const STATUS_FAILED = 'failed';
 
     /**
@@ -36,6 +139,8 @@ interface WebhookInterface
      */
     public function body(array $body): self;
 
+    public function bodyAsString(string $body): self;
+
     public function configured(?bool $configured = null): self;
 
     public function currentAttempt(int $currentAttempt): self;
@@ -56,6 +161,8 @@ interface WebhookInterface
      * @return null|mixed[]
      */
     public function getBody(): ?array;
+
+    public function getBodyAsString(): ?string;
 
     public function getCurrentAttempt(): int;
 
@@ -78,6 +185,8 @@ interface WebhookInterface
     public function getMethod(): ?string;
 
     public function getSecret(): ?string;
+
+    public function getSendAfter(): ?\DateTimeInterface;
 
     public function getStatus(): string;
 
@@ -109,6 +218,8 @@ interface WebhookInterface
     public function method(string $method): self;
 
     public function secret(string $secret): self;
+
+    public function sendAfter(\DateTimeInterface $after): self;
 
     public function sendNow(?bool $sendNow = null): self;
 

@@ -11,26 +11,35 @@ abstract class AbstractWebhook implements WebhookInterface
     /**
      * @var string[]
      */
-    protected static $integers = ['current_attempt', 'max_attempt'];
+    protected static $integers = [self::OPTION_CURRENT_ATTEMPT, self::OPTION_MAX_ATTEMPT];
 
     /**
      * @var string[]
      */
     protected static $setters = [
-        'body' => 'body',
-        'current_attempt' => 'currentAttempt',
-        'event' => 'event',
-        'http_options' => 'httpClientOptions',
-        'max_attempt' => 'maxAttempt',
-        'method' => 'method',
-        'status' => 'status',
-        'url' => 'url',
+        self::OPTION_BODY => 'body',
+        self::OPTION_BODY_AS_STRING => 'bodyAsString',
+        self::OPTION_CURRENT_ATTEMPT => 'currentAttempt',
+        self::OPTION_EVENT => 'event',
+        self::OPTION_ID => 'id',
+        self::OPTION_HTTP_OPTIONS => 'httpClientOptions',
+        self::OPTION_MAX_ATTEMPT => 'maxAttempt',
+        self::OPTION_METHOD => 'method',
+        self::OPTION_SECRET => 'secret',
+        self::OPTION_SEND_AFTER => 'sendAfter',
+        self::OPTION_STATUS => 'status',
+        self::OPTION_URL => 'url',
     ];
 
     /**
      * @var null|mixed[]
      */
     private $body;
+
+    /**
+     * @var null|string
+     */
+    private $bodyAsString;
 
     /**
      * @var null|bool
@@ -78,6 +87,11 @@ abstract class AbstractWebhook implements WebhookInterface
     private $secret;
 
     /**
+     * @var null|\DateTimeInterface
+     */
+    private $sendAfter;
+
+    /**
      * @var null|bool
      */
     private $sendNow;
@@ -85,7 +99,7 @@ abstract class AbstractWebhook implements WebhookInterface
     /**
      * @var null|string
      */
-    private $status;
+    private $status = self::STATUS_PENDING;
 
     /**
      * @var null|string
@@ -139,6 +153,13 @@ abstract class AbstractWebhook implements WebhookInterface
         return $this;
     }
 
+    public function bodyAsString(string $body): WebhookInterface
+    {
+        $this->bodyAsString = $body;
+
+        return $this;
+    }
+
     public function configured(?bool $configured = null): WebhookInterface
     {
         $this->configured = $configured ?? true;
@@ -176,6 +197,11 @@ abstract class AbstractWebhook implements WebhookInterface
     public function getBody(): ?array
     {
         return $this->body;
+    }
+
+    public function getBodyAsString(): ?string
+    {
+        return $this->bodyAsString;
     }
 
     public function getCurrentAttempt(): int
@@ -222,6 +248,11 @@ abstract class AbstractWebhook implements WebhookInterface
     public function getSecret(): ?string
     {
         return $this->secret;
+    }
+
+    public function getSendAfter(): ?\DateTimeInterface
+    {
+        return $this->sendAfter;
     }
 
     public function getStatus(): string
@@ -298,6 +329,13 @@ abstract class AbstractWebhook implements WebhookInterface
     public function secret(string $secret): WebhookInterface
     {
         $this->secret = $secret;
+
+        return $this;
+    }
+
+    public function sendAfter(\DateTimeInterface $after): WebhookInterface
+    {
+        $this->sendAfter = $after;
 
         return $this;
     }
