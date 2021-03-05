@@ -29,16 +29,16 @@ final class WebhookDataCollector extends DataCollector
 
     public function collect(Request $request, Response $response, ?\Throwable $throwable = null): void
     {
-        $this->setMiddleware();
+        $this->setConfigurators();
         $this->setResults();
     }
 
     /**
      * @return mixed[]
      */
-    public function getMiddleware(): array
+    public function getConfigurators(): array
     {
-        return $this->data['webhook_middleware'] ?? [];
+        return $this->data['webhook_configurators'] ?? [];
     }
 
     public function getName(): string
@@ -59,7 +59,7 @@ final class WebhookDataCollector extends DataCollector
         $this->data = [];
     }
 
-    private function setMiddleware(): void
+    private function setConfigurators(): void
     {
         $this->data['webhook_configurators'] = [];
 
@@ -67,13 +67,13 @@ final class WebhookDataCollector extends DataCollector
             return;
         }
 
-        foreach ($this->webhookClient->getMiddleware() as $middleware) {
-            $reflection = new \ReflectionClass($middleware);
+        foreach ($this->webhookClient->getConfigurators() as $configurator) {
+            $reflection = new \ReflectionClass($configurator);
 
-            $this->data['webhook_middleware'][] = [
+            $this->data['webhook_configurators'][] = [
                 'class' => $reflection->getName(),
                 'filename' => $reflection->getFileName(),
-                'priority' => $middleware->getPriority(),
+                'priority' => $configurator->getPriority(),
             ];
         }
     }

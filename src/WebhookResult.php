@@ -11,11 +11,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 final class WebhookResult implements WebhookResultInterface
 {
     /**
-     * @var null|string
-     */
-    private $id;
-
-    /**
      * @var null|\Symfony\Contracts\HttpClient\ResponseInterface
      */
     private $response;
@@ -40,11 +35,6 @@ final class WebhookResult implements WebhookResultInterface
         $this->throwable = $throwable;
     }
 
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
-
     public function getResponse(): ?ResponseInterface
     {
         return $this->response;
@@ -63,12 +53,5 @@ final class WebhookResult implements WebhookResultInterface
     public function isSuccessful(): bool
     {
         return $this->throwable === null;
-    }
-
-    public function setId(string $id): WebhookResultInterface
-    {
-        $this->id = $id;
-
-        return $this;
     }
 }

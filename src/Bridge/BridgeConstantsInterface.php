@@ -7,6 +7,11 @@ namespace EonX\EasyWebhook\Bridge;
 interface BridgeConstantsInterface
 {
     /**
+     * @var int
+     */
+    public const DEFAULT_CONFIGURATOR_PRIORITY = 5000;
+
+    /**
      * @var string
      */
     public const HTTP_CLIENT = 'easy_webhooks.http_client';
@@ -14,22 +19,7 @@ interface BridgeConstantsInterface
     /**
      * @var string
      */
-    public const PARAM_ASYNC = 'easy_webhooks.async';
-
-    /**
-     * @var string
-     */
     public const PARAM_BUS = 'easy_webhooks.bus';
-
-    /**
-     * @var string
-     */
-    public const PARAM_EVENT_HEADER = 'easy_webhooks.params.event_header';
-
-    /**
-     * @var string
-     */
-    public const PARAM_ID_HEADER = 'easy_webhooks.params.id_header';
 
     /**
      * @var string
@@ -44,6 +34,16 @@ interface BridgeConstantsInterface
     /**
      * @var string
      */
+    public const PARAM_EVENT_HEADER = 'easy_webhooks.params.event_header';
+
+    /**
+     * @var string
+     */
+    public const PARAM_ID_HEADER = 'easy_webhooks.params.id_header';
+
+    /**
+     * @var string
+     */
     public const PARAM_SIGNATURE_HEADER = 'easy_webhooks.params.signature_header';
 
     /**
@@ -54,10 +54,5 @@ interface BridgeConstantsInterface
     /**
      * @var string
      */
-    public const STACK = 'easy_webhooks.stack';
-
-    /**
-     * @var string
-     */
-    public const TAG_MIDDLEWARE = 'easy_webhooks.middleware';
+    public const TAG_WEBHOOK_CONFIGURATOR = 'easy_webhooks.webhook_configurator';
 }

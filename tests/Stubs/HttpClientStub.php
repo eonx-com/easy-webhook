@@ -23,19 +23,9 @@ final class HttpClientStub implements HttpClientInterface
     private $options;
 
     /**
-     * @var null|\Throwable
-     */
-    private $throwable;
-
-    /**
      * @var string
      */
     private $url;
-
-    public function __construct(?\Throwable $throwable = null)
-    {
-        $this->throwable = $throwable;
-    }
 
     public function getMethod(): ?string
     {
@@ -57,8 +47,6 @@ final class HttpClientStub implements HttpClientInterface
 
     /**
      * @param null|mixed[] $options
-     *
-     * @throws \Throwable
      */
     public function request(string $method, string $url, ?array $options = null): ResponseInterface
     {
@@ -66,11 +54,7 @@ final class HttpClientStub implements HttpClientInterface
         $this->url = $url;
         $this->options = $options;
 
-        if ($this->throwable !== null) {
-            throw $this->throwable;
-        }
-
-        return MockResponse::fromRequest($method, $url, $options ?? [], new MockResponse());
+        return new MockResponse();
     }
 
     /**
