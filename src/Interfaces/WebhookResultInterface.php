@@ -8,8 +8,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 interface WebhookResultInterface
 {
-    public function getId(): ?string;
-
     public function getResponse(): ?ResponseInterface;
 
     public function getThrowable(): ?\Throwable;
@@ -17,6 +15,4 @@ interface WebhookResultInterface
     public function getWebhook(): WebhookInterface;
 
     public function isSuccessful(): bool;
-
-    public function setId(string $id): self;
 }

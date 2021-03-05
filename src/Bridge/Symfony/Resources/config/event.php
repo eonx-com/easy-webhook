@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use EonX\EasyWebhook\Bridge\BridgeConstantsInterface;
-use EonX\EasyWebhook\Middleware\EventHeaderMiddleware;
+use EonX\EasyWebhook\Configurators\EventWebhookConfigurator;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -14,6 +14,7 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services
-        ->set(EventHeaderMiddleware::class)
-        ->arg('$eventHeader', '%' . BridgeConstantsInterface::PARAM_EVENT_HEADER . '%');
+        ->set(EventWebhookConfigurator::class)
+        ->arg('$eventHeader', '%' . BridgeConstantsInterface::PARAM_EVENT_HEADER . '%')
+        ->arg('$priority', BridgeConstantsInterface::DEFAULT_CONFIGURATOR_PRIORITY);
 };
