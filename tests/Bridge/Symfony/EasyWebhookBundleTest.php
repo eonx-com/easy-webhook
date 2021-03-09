@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EonX\EasyWebhook\Tests\Bridge\Symfony;
 
 use EonX\EasyWebhook\Bridge\BridgeConstantsInterface;
-use EonX\EasyWebhook\Middleware\BodyFormatterMiddleware;
-use EonX\EasyWebhook\Middleware\MethodMiddleware;
+use EonX\EasyWebhook\Configurators\BodyFormatterWebhookConfigurator;
+use EonX\EasyWebhook\Configurators\MethodWebhookConfigurator;
 use EonX\EasyWebhook\Signers\Rs256Signer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -26,10 +26,13 @@ final class EasyWebhookBundleTest extends AbstractSymfonyTestCase
                 self::assertFalse($container->hasParameter(BridgeConstantsInterface::PARAM_SIGNATURE_HEADER));
                 self::assertFalse($container->has(BridgeConstantsInterface::SIGNER));
                 self::assertInstanceOf(
-                    BodyFormatterMiddleware::class,
-                    $container->get(BodyFormatterMiddleware::class)
+                    BodyFormatterWebhookConfigurator::class,
+                    $container->get(BodyFormatterWebhookConfigurator::class)
                 );
-                self::assertInstanceOf(MethodMiddleware::class, $container->get(MethodMiddleware::class));
+                self::assertInstanceOf(
+                    MethodWebhookConfigurator::class,
+                    $container->get(MethodWebhookConfigurator::class)
+                );
             },
         ];
 
@@ -53,10 +56,11 @@ final class EasyWebhookBundleTest extends AbstractSymfonyTestCase
             },
         ];
 
-        yield 'No default middleware' => [
-            [__DIR__ . '/Fixtures/config/no_default_middleware.yaml'],
+        yield 'No default configurators' => [
+            [__DIR__ . '/Fixtures/config/no_default_configurators.yaml'],
             static function (ContainerInterface $container): void {
-                self::assertFalse($container->has(BodyFormatterMiddleware::class));
+                self::assertFalse($container->has(BodyFormatterWebhookConfigurator::class));
+                self::assertFalse($container->has(MethodWebhookConfigurator::class));
             },
         ];
     }
