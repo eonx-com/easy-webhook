@@ -9,7 +9,7 @@ use EonX\EasyWebhook\Common\Entity\WebhookInterface;
 use EonX\EasyWebhook\Doctrine\Store\DoctrineDbalStore;
 use Illuminate\Database\Capsule\Manager;
 
-final class DoctrineDbalStoreFromIlluminateDatabaseTest extends AbstractDoctrineDbalStoreTestCase
+final class FromIlluminateDatabaseDoctrineDbalStoreTest extends AbstractDoctrineDbalStoreTestCase
 {
     public function testStore(): void
     {

@@ -7,7 +7,7 @@ use EonX\EasyWebhook\Common\Middleware\MiddlewareInterface;
 use EonX\EasyWebhook\Common\Stack\StackInterface;
 use Throwable;
 
-final class StackThrowStub implements StackInterface
+final class WithThrowableStackStub implements StackInterface
 {
     private int $index = 0;
 

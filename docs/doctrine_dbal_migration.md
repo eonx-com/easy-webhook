@@ -7,6 +7,8 @@ ignore: true
 ## Webhooks
 
 ```php
+<?php
+
 final class WebhooksMigration
 {
     public function up(): void
